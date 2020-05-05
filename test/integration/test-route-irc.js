@@ -1,21 +1,21 @@
 var supertest = require('supertest');
 var app = require('../../app');
-
-exports.bmi_should_accept_numbers = function(done) {
+//nuevo reparando,,funciona con bmi,pero no con irc
+exports.irc_should_accept_numbers = function(done) {
     supertest(app)
         .get('/bmi?weight=70&height=2.0')
         .expect(200)
         .end(done);
 };
-
-exports.bmi_should_reject_strings = function(done) {
+//nuevo,funciona con bmi,pero no con irc
+exports.irc_should_reject_strings = function(done) {
     supertest(app)
         .get('/bmi?weight=string&height=anotherString')
         .expect(400)
         .end(done);
 };
-
-exports.bmi_should_work_in_finnish_and_metric = function(done) {
+//nuevo reparando,funciona con bmi,pero no con irc
+exports.irc_should_work_in_finnish_and_metric = function(done) {
     supertest(app)
         .get('/bmi?weight=70&height=2.0&lang=fi&unit=metric')
         .expect(200, {
@@ -26,8 +26,8 @@ exports.bmi_should_work_in_finnish_and_metric = function(done) {
         })
         .end(done);
 };
-
-exports.bmi_should_work_with_metric_in_english = function(done) {
+//nuevo reparando,funciona con bmi,pero no con irc
+exports.irc_should_work_with_metric_in_english = function(done) {
     supertest(app)
         .get('/bmi?weight=70&height=2.0&lang=en&unit=metric')
         .expect(200, {
@@ -38,8 +38,8 @@ exports.bmi_should_work_with_metric_in_english = function(done) {
         })
         .end(done);
 };
-
-exports.bmi_should_work_with_imperial_in_english = function(done) {
+//nuevo reparando,funciona con bmi,pero no con irc
+exports.irc_should_work_with_imperial_in_english = function(done) {
     supertest(app)
         .get('/bmi?weight=66&height=51lang=en&unit=imperial')
         .expect(200, {
