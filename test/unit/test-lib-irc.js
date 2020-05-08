@@ -4,7 +4,8 @@ var irc = require('../../lib/irc');
 // irc.getIndex tests
 exports.it_should_return_number = function(done) {
 
-    var result = irc.getIndexIRC(30, 1.6, 'metric');
+
+    var result = irc.getIndexIRC(30, 1.6, 'metrics');
     assert.ok(result === 30 / Math.pow(1.6, 2));
     return done();
 };

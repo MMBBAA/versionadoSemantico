@@ -1,14 +1,50 @@
-var irc = require('../lib/irc'); //var bmi = require('../lib/bmi');
+const Patient = require('../lib/Patient');
+module.exports = function(req, res) {
 
-const patient = new patientClass(160, 72); //creación del objeto
-module.exports = function(req, res, next) {
-    return res.json({
-        result: {
-            bmi: patient.getIndexIRC(req.height, req, weight, req.unit), //con objeto
-            // bmi: irc.getIndexIRC(req.weight, req.height, req.unit), // bmi: bmi.getIndex(req.weight, req.height, req.unit),
-            description: patientClass.getDescriptionIRC(patient.getIndexIRC(height, weight), lang) //con metodo estatico y objeto
-                // description: irc.getDescriptionIRC(irc.getIndexIRC(req.weight, req.height, req.unit), req.lang) //description: bmi.getDescription(bmi.getIndex(req.weight, req.height, req.unit), req.lang)
+    const reductions = ['statin', 'sysBP', 'aspirin', 'smoker'];
+    const score = 'ten';
 
-        }
-    });
+    const patient = new Patient(
+        req.weight,
+        req.height,
+        setPatientInfo(
+            req.query.gender,
+            req.query.age,
+            req.query.totCholesterol,
+            req.query.hdl,
+            req.query.sysBP,
+            req.query.smoker,
+            req.query.hypertensive,
+            req.query.race,
+            req.query.diabetic
+        )
+    );
+
+    res.json({ potencialRisk: patient.computePotentialRisk(reductions, score) });
+
+};
+
+
+
+
+const setPatientInfo = (gender, age, totCholesterol, hdl, sysBP, smoker, hypertensive, race, diabetic) => {
+    const patientInfo = {};
+
+    const thisDate = new Date();
+
+    patientInfo.gender = gender;
+    patientInfo.age = age;
+
+    patientInfo.totalCholesterol = totCholesterol;
+    patientInfo.hdl = hdl;
+    patientInfo.systolicBloodPressure = sysBP;
+
+    const relatedFactors = {};
+    relatedFactors.smoker = smoker;
+    relatedFactors.hypertensive = hypertensive;
+    relatedFactors.race = race;
+    relatedFactors.diabetic = diabetic;
+    patientInfo.relatedFactors = relatedFactors;
+
+    return patientInfo;
 };
